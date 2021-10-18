@@ -11,6 +11,7 @@
     <Product>brewlib</Product>
     <Company>brewlib</Company>
     <Authors>brewlib</Authors>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
