@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BrewLib</RootNamespace>
     <AssemblyName>BrewLib</AssemblyName>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <PackageId>brewlib</PackageId>
     <Copyright>Copyright © Damnae 2016</Copyright>
     <UseWindowsForms>true</UseWindowsForms>
