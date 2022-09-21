@@ -1,5 +1,6 @@
 ﻿using BrewLib.Graphics.Textures;
 using OpenTK;
+using OpenTK.Mathematics;
 using System;
 
 namespace BrewLib.Graphics.Renderers

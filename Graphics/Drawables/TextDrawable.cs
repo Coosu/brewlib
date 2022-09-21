@@ -4,6 +4,7 @@ using BrewLib.Graphics.Text;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
 using System;
 using System.Drawing;
 

@@ -1,4 +1,6 @@
 ﻿using OpenTK.Input;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.UserInterface

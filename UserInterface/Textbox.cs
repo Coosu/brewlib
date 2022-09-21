@@ -5,6 +5,8 @@ using BrewLib.Util;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.UserInterface
@@ -153,32 +155,32 @@ namespace BrewLib.UserInterface
                 var inputManager = manager.InputManager;
                 switch (e.Key)
                 {
-                    case Key.Escape:
+                    case Keys.Escape:
                         if (hasFocus)
                             manager.KeyboardFocus = null;
                         break;
-                    case Key.BackSpace:
+                    case Keys.Backspace:
                         if (selectionStart > 0 && selectionStart == cursorPosition)
                             selectionStart--;
                         ReplaceSelection("");
                         break;
-                    case Key.Delete:
+                    case Keys.Delete:
                         if (selectionStart < Value.Length && selectionStart == cursorPosition)
                             cursorPosition++;
                         ReplaceSelection("");
                         break;
-                    case Key.A:
+                    case Keys.A:
                         if (inputManager.ControlOnly)
                             SelectAll();
                         break;
-                    case Key.C:
+                    case Keys.C:
                         if (inputManager.ControlOnly)
                             if (selectionStart != cursorPosition)
                                 ClipboardHelper.SetText(Value.Substring(SelectionLeft, SelectionLength), System.Windows.Forms.TextDataFormat.UnicodeText);
                             else
                                 ClipboardHelper.SetText(Value, System.Windows.Forms.TextDataFormat.UnicodeText);
                         break;
-                    case Key.V:
+                    case Keys.V:
                         if (inputManager.ControlOnly)
                         {
                             var clipboardText = ClipboardHelper.GetText(System.Windows.Forms.TextDataFormat.UnicodeText);
@@ -190,7 +192,7 @@ namespace BrewLib.UserInterface
                             }
                         }
                         break;
-                    case Key.X:
+                    case Keys.X:
                         if (inputManager.ControlOnly)
                         {
                             if (selectionStart == cursorPosition)
@@ -200,7 +202,7 @@ namespace BrewLib.UserInterface
                             ReplaceSelection("");
                         }
                         break;
-                    case Key.Left:
+                    case Keys.Left:
                         if (inputManager.Shift)
                         {
                             if (cursorPosition > 0)
@@ -211,7 +213,7 @@ namespace BrewLib.UserInterface
                         else if (cursorPosition > 0)
                             cursorPosition = --selectionStart;
                         break;
-                    case Key.Right:
+                    case Keys.Right:
                         if (inputManager.Shift)
                         {
                             if (cursorPosition < Value.Length)
@@ -222,28 +224,28 @@ namespace BrewLib.UserInterface
                         else if (cursorPosition < Value.Length)
                             selectionStart = ++cursorPosition;
                         break;
-                    case Key.Up:
+                    case Keys.Up:
                         cursorPosition = content.GetCharacterIndexAbove(cursorPosition);
                         if (!inputManager.Shift)
                             selectionStart = cursorPosition;
                         break;
-                    case Key.Down:
+                    case Keys.Down:
                         cursorPosition = content.GetCharacterIndexBelow(cursorPosition);
                         if (!inputManager.Shift)
                             selectionStart = cursorPosition;
                         break;
-                    case Key.Home:
+                    case Keys.Home:
                         cursorPosition = 0;
                         if (!inputManager.Shift)
                             selectionStart = cursorPosition;
                         break;
-                    case Key.End:
+                    case Keys.End:
                         cursorPosition = Value.Length;
                         if (!inputManager.Shift)
                             selectionStart = cursorPosition;
                         break;
-                    case Key.Enter:
-                    case Key.KeypadEnter:
+                    case Keys.Enter:
+                    case Keys.KeyPadEnter:
                         if (AcceptMultiline && (!EnterCommits || inputManager.Shift))
                             ReplaceSelection("\n");
                         else if (EnterCommits && hasCommitPending)

@@ -3,6 +3,7 @@ using BrewLib.Graphics.Drawables;
 using BrewLib.Graphics.Textures;
 using BrewLib.UserInterface.Skinning.Styles;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace BrewLib.UserInterface
 {

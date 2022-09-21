@@ -1,6 +1,8 @@
 ﻿using BrewLib.Graphics;
 using BrewLib.Input;
 using OpenTK.Input;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.ScreenLayers
@@ -121,7 +123,7 @@ namespace BrewLib.ScreenLayers
         public virtual void FixedUpdate()
         {
         }
-        
+
         public virtual void Draw(DrawContext drawContext, double tween)
         {
         }
@@ -140,7 +142,7 @@ namespace BrewLib.ScreenLayers
 
         public override bool OnKeyDown(KeyboardKeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            if (e.Key == Keys.Escape)
             {
                 Close();
                 return true;

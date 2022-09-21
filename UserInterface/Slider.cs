@@ -1,6 +1,8 @@
 ﻿using BrewLib.UserInterface.Skinning.Styles;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.UserInterface

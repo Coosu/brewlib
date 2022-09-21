@@ -3,6 +3,9 @@ using BrewLib.Input;
 using BrewLib.Time;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,8 +51,8 @@ namespace BrewLib.ScreenLayers
             LayerAdded?.Invoke(layer);
             layer.Load();
 
-            var width = Math.Max(1, window.Width);
-            var height = Math.Max(1, window.Height);
+            var width = Math.Max(1, window.Size.X);
+            var height = Math.Max(1, window.Size.Y);
             layer.Resize(width, height);
         }
 
@@ -100,7 +103,7 @@ namespace BrewLib.ScreenLayers
 
         public void Update(bool isFixedRateUpdate)
         {
-            var active = window.Focused;
+            var active = window.IsFocused;
             if (!active) changeFocus(null);
 
             updateQueue.Clear();
@@ -179,10 +182,10 @@ namespace BrewLib.ScreenLayers
             }
         }
 
-        private void window_Resize(object sender, EventArgs e)
+        private void window_Resize(ResizeEventArgs e)
         {
-            var width = window.Width;
-            var height = window.Height;
+            var width = e.Width;
+            var height = e.Height;
 
             if (width == 0 || height == 0) return;
 

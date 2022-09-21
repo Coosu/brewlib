@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using OpenTK.Windowing.Desktop;
 using System;
 
 namespace BrewLib.Util

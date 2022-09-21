@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Input;
+using OpenTK.Windowing.Common;
 using System.Collections.Generic;
 
 namespace BrewLib.Input
@@ -84,7 +85,7 @@ namespace BrewLib.Input
                     return true;
             return false;
         }
-
+        /*
         public bool OnKeyPress(KeyPressEventArgs e)
         {
             foreach (var handler in handlers)
@@ -92,7 +93,7 @@ namespace BrewLib.Input
                     return true;
             return false;
         }
-
+        */
         public virtual void OnGamepadConnected(GamepadEventArgs e)
         {
             foreach (var handler in handlers)

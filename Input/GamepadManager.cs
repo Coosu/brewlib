@@ -1,5 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.Input
@@ -47,7 +49,7 @@ namespace BrewLib.Input
             var wasConnected = state.IsConnected;
             previousPressedButtons = pressedButtons;
 
-            state = GamePad.GetState(gamepadIndex);
+            state = GamePads.GetState(gamepadIndex);
             keyboardState = gamepadIndex == 0 && !state.IsConnected ? Keyboard.GetState() : (KeyboardState?)null;
             pressedButtons = 0;
 
@@ -59,27 +61,27 @@ namespace BrewLib.Input
             triggerLeft = applyTriggerFilters(state.Triggers.Left);
             triggerRight = applyTriggerFilters(state.Triggers.Right);
 
-            updateButton(dPadState.Left, GamepadButton.DPadLeft, Key.F);
-            updateButton(dPadState.Up, GamepadButton.DPadUp, Key.T);
-            updateButton(dPadState.Right, GamepadButton.DPadRight, Key.H);
-            updateButton(dPadState.Down, GamepadButton.DPadDown, Key.G);
-            updateAxis(thumb.X, GamepadButton.ThumbLeft, GamepadButton.ThumbRight, Key.A, Key.D);
-            updateAxis(thumb.Y, GamepadButton.ThumbDown, GamepadButton.ThumbUp, Key.S, Key.W);
-            updateAxis(thumbAlt.X, GamepadButton.ThumbAltLeft, GamepadButton.ThumbAltRight, Key.Left, Key.Right);
-            updateAxis(thumbAlt.Y, GamepadButton.ThumbAltDown, GamepadButton.ThumbAltUp, Key.Down, Key.Up);
-            updateButton(buttonsState.A, GamepadButton.A, Key.J);
-            updateButton(buttonsState.B, GamepadButton.B, Key.K);
-            updateButton(buttonsState.X, GamepadButton.X, Key.U);
-            updateButton(buttonsState.Y, GamepadButton.Y, Key.I);
-            updateButton(buttonsState.LeftShoulder, GamepadButton.LeftShoulder, Key.O);
-            updateButton(buttonsState.RightShoulder, GamepadButton.RightShoulder, Key.L);
-            updateTrigger(triggerLeft, GamepadButton.LeftTrigger, Key.P);
-            updateTrigger(triggerRight, GamepadButton.RightTrigger, Key.Semicolon);
-            updateButton(buttonsState.LeftStick, GamepadButton.Thumb, Key.Q);
-            updateButton(buttonsState.RightStick, GamepadButton.ThumbAlt, Key.E);
-            updateButton(buttonsState.Start, GamepadButton.Start, Key.Enter);
-            updateButton(buttonsState.Back, GamepadButton.Select, Key.Escape);
-            updateButton(buttonsState.BigButton, GamepadButton.Home, Key.BackSpace);
+            updateButton(dPadState.Left, GamepadButton.DPadLeft, Keys.F);
+            updateButton(dPadState.Up, GamepadButton.DPadUp, Keys.T);
+            updateButton(dPadState.Right, GamepadButton.DPadRight, Keys.H);
+            updateButton(dPadState.Down, GamepadButton.DPadDown, Keys.G);
+            updateAxis(thumb.X, GamepadButton.ThumbLeft, GamepadButton.ThumbRight, Keys.A, Keys.D);
+            updateAxis(thumb.Y, GamepadButton.ThumbDown, GamepadButton.ThumbUp, Keys.S, Keys.W);
+            updateAxis(thumbAlt.X, GamepadButton.ThumbAltLeft, GamepadButton.ThumbAltRight, Keys.Left, Keys.Right);
+            updateAxis(thumbAlt.Y, GamepadButton.ThumbAltDown, GamepadButton.ThumbAltUp, Keys.Down, Keys.Up);
+            updateButton(buttonsState.A, GamepadButton.A, Keys.J);
+            updateButton(buttonsState.B, GamepadButton.B, Keys.K);
+            updateButton(buttonsState.X, GamepadButton.X, Keys.U);
+            updateButton(buttonsState.Y, GamepadButton.Y, Keys.I);
+            updateButton(buttonsState.LeftShoulder, GamepadButton.LeftShoulder, Keys.O);
+            updateButton(buttonsState.RightShoulder, GamepadButton.RightShoulder, Keys.L);
+            updateTrigger(triggerLeft, GamepadButton.LeftTrigger, Keys.P);
+            updateTrigger(triggerRight, GamepadButton.RightTrigger, Keys.Semicolon);
+            updateButton(buttonsState.LeftStick, GamepadButton.Thumb, Keys.Q);
+            updateButton(buttonsState.RightStick, GamepadButton.ThumbAlt, Keys.E);
+            updateButton(buttonsState.Start, GamepadButton.Start, Keys.Enter);
+            updateButton(buttonsState.Back, GamepadButton.Select, Keys.Escape);
+            updateButton(buttonsState.BigButton, GamepadButton.Home, Keys.Backspace);
 
             if (!state.IsConnected)
             {
@@ -116,17 +118,17 @@ namespace BrewLib.Input
             }
         }
 
-        private void updateButton(ButtonState state, GamepadButton button, Key key)
+        private void updateButton(ButtonState state, GamepadButton button, Keys key)
         {
             if (state == ButtonState.Pressed || isKeyDown(key)) pressedButtons |= button;
         }
 
-        private void updateTrigger(float state, GamepadButton button, Key key)
+        private void updateTrigger(float state, GamepadButton button, Keys key)
         {
             if (state > 0.5f || isKeyDown(key)) pressedButtons |= button;
         }
 
-        private void updateAxis(float state, GamepadButton negativeButton, GamepadButton positiveButton, Key negativeKey, Key positiveKey)
+        private void updateAxis(float state, GamepadButton negativeButton, GamepadButton positiveButton, Keys negativeKey, Keys positiveKey)
         {
             if (state > 0.5f || isKeyDown(positiveKey)) pressedButtons |= positiveButton;
             if (state < -0.5f || isKeyDown(negativeKey)) pressedButtons |= negativeButton;
@@ -150,7 +152,7 @@ namespace BrewLib.Input
             return value * scale;
         }
 
-        private bool isKeyDown(Key key)
+        private bool isKeyDown(Keys key)
             => keyboardState?.IsKeyDown(key) ?? false;
     }
 

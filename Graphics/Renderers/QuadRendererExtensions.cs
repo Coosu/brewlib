@@ -2,6 +2,7 @@
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
 using System;
 
 namespace BrewLib.Graphics.Renderers

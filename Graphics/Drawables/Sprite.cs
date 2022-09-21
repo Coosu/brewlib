@@ -4,6 +4,7 @@ using BrewLib.Graphics.Textures;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
 using System;
 
 namespace BrewLib.Graphics.Drawables

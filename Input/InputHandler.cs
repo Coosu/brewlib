@@ -1,5 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Input;
+using OpenTK.Windowing.Common;
+using System.Windows.Forms;
 
 namespace BrewLib.Input
 {
@@ -12,7 +14,7 @@ namespace BrewLib.Input
         void OnMouseMove(MouseMoveEventArgs e);
         bool OnKeyDown(KeyboardKeyEventArgs e);
         bool OnKeyUp(KeyboardKeyEventArgs e);
-        bool OnKeyPress(KeyPressEventArgs e);
+        //bool OnKeyPress(KeyPressEventArgs e);
         void OnGamepadConnected(GamepadEventArgs e);
         bool OnGamepadButtonDown(GamepadButtonEventArgs e);
         bool OnGamepadButtonUp(GamepadButtonEventArgs e);

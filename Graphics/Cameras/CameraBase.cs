@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using OpenTK.Mathematics;
 using System;
 using System.Drawing;
 
@@ -117,8 +118,8 @@ namespace BrewLib.Graphics.Cameras
             var deviceX = 2 * (screenCoords.X / viewport.Width) - 1;
             var deviceY = -2 * (screenCoords.Y / viewport.Height) + 1;
 
-            var near = Vector4.Transform(new Vector4(deviceX, deviceY, NearPlane, 1), invertedProjectionView).Xyz;
-            var far = Vector4.Transform(new Vector4(deviceX, deviceY, FarPlane, 1), invertedProjectionView).Xyz;
+            var near = (new Vector4(deviceX, deviceY, NearPlane, 1) * invertedProjectionView).Xyz;
+            var far = (new Vector4(deviceX, deviceY, FarPlane, 1) * invertedProjectionView).Xyz;
             var direction = Vector3.Normalize(far - near);
 
             // The screen ray is parallel to the world plane
@@ -135,7 +136,7 @@ namespace BrewLib.Graphics.Cameras
             Validate();
             // TODO Vector3.Project() ?
 
-            var transformedPosition = Vector4.Transform(new Vector4(worldCoords, 1), projectionView);
+            var transformedPosition = new Vector4(worldCoords, 1) * projectionView;
             var devicePosition = transformedPosition.Xyz / Math.Abs(transformedPosition.W);
 
             return new Vector3(
@@ -172,8 +173,8 @@ namespace BrewLib.Graphics.Cameras
         public void Rotate(Vector3 axis, float angle)
         {
             var rotation = Matrix3.CreateFromAxisAngle(axis, angle);
-            Vector3.Transform(ref up, ref rotation, out up);
-            Vector3.Transform(ref forward, ref rotation, out forward);
+            up = up * rotation;
+            forward = forward * rotation;
             Invalidate();
         }
 

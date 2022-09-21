@@ -5,11 +5,14 @@ using BrewLib.UserInterface.Skinning.Styles;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.Text;
+using System.Windows.Forms;
 
 namespace BrewLib.UserInterface
 {
