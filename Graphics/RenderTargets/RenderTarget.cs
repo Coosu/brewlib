@@ -1,6 +1,7 @@
 ﻿using BrewLib.Graphics.Textures;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using System;
 using System.Diagnostics;
 using System.Drawing;

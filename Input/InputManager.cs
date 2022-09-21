@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace BrewLib.Input
 {
@@ -12,12 +16,8 @@ namespace BrewLib.Input
 
         private bool hadMouseFocus;
         private bool hasMouseHover;
-        public bool HasMouseFocus => window.Focused && hasMouseHover;
-        public bool HasWindowFocus => window.Focused;
-
-        private Dictionary<int, GamepadManager> gamepadManagers = new Dictionary<int, GamepadManager>();
-        public IEnumerable<GamepadManager> GamepadManagers => gamepadManagers.Values;
-        public GamepadManager GetGamepadManager(int gamepadIndex = 0) => gamepadManagers[gamepadIndex];
+        public bool HasMouseFocus => window.IsFocused && hasMouseHover;
+        public bool HasWindowFocus => window.IsFocused;
 
         // Helpers
         public Vector2 MousePosition { get; private set; }
@@ -49,15 +49,11 @@ namespace BrewLib.Input
             window.MouseMove += window_MouseMove;
             window.KeyDown += window_KeyDown;
             window.KeyUp += window_KeyUp;
-            window.KeyPress += window_KeyPress;
+            //window.key += window_KeyPress;
         }
 
         public void Dispose()
         {
-            foreach (var gamepadIndex in new List<int>(gamepadManagers.Keys))
-                DisableGamepadEvents(gamepadIndex);
-            gamepadManagers.Clear();
-
             window.FocusedChanged -= window_FocusedChanged;
             window.MouseEnter -= window_MouseEnter;
             window.MouseLeave -= window_MouseLeave;
@@ -68,31 +64,7 @@ namespace BrewLib.Input
             window.MouseMove += window_MouseMove;
             window.KeyDown -= window_KeyDown;
             window.KeyUp -= window_KeyUp;
-            window.KeyPress -= window_KeyPress;
-        }
-
-        public void EnableGamepadEvents(int gamepadIndex = 0)
-        {
-            var manager = new GamepadManager(gamepadIndex);
-            manager.OnConnected += gamepadManager_OnConnected;
-            manager.OnButtonDown += gamepadManager_OnButtonDown;
-            manager.OnButtonUp += gamepadManager_OnButtonUp;
-            gamepadManagers.Add(gamepadIndex, manager);
-        }
-
-        public void DisableGamepadEvents(int gamepadIndex = 0)
-        {
-            var manager = gamepadManagers[gamepadIndex];
-            manager.OnConnected -= gamepadManager_OnConnected;
-            manager.OnButtonDown -= gamepadManager_OnButtonDown;
-            manager.OnButtonUp -= gamepadManager_OnButtonUp;
-            gamepadManagers.Remove(gamepadIndex);
-        }
-
-        public void Update()
-        {
-            foreach (var gamepadManager in gamepadManagers.Values)
-                gamepadManager.Update();
+            //window.KeyPress -= window_KeyPress;
         }
 
         private void updateMouseFocus()
@@ -102,12 +74,12 @@ namespace BrewLib.Input
 
             handler.OnFocusChanged(new FocusChangedEventArgs(HasMouseFocus));
         }
-        private void window_MouseEnter(object sender, EventArgs e)
+        private void window_MouseEnter()
         {
             hasMouseHover = true;
             updateMouseFocus();
         }
-        private void window_MouseLeave(object sender, EventArgs e)
+        private void window_MouseLeave()
         {
             // https://github.com/opentk/opentk/issues/301
             return;
@@ -115,11 +87,11 @@ namespace BrewLib.Input
             hasMouseHover = false;
             updateMouseFocus();
         }
-        private void window_FocusedChanged(object sender, EventArgs e) => updateMouseFocus();
+        private void window_FocusedChanged(FocusedChangedEventArgs e) => updateMouseFocus();
 
-        private void window_MouseDown(object sender, MouseButtonEventArgs e) => handler.OnClickDown(e);
-        private void window_MouseUp(object sender, MouseButtonEventArgs e) => handler.OnClickUp(e);
-        private void window_MouseMove(object sender, MouseMoveEventArgs e)
+        private void window_MouseDown(MouseButtonEventArgs e) => handler.OnClickDown(e);
+        private void window_MouseUp(MouseButtonEventArgs e) => handler.OnClickUp(e);
+        private void window_MouseMove(MouseMoveEventArgs e)
         {
             MousePosition = new Vector2(e.X, e.Y);
             handler.OnMouseMove(e);
@@ -131,20 +103,16 @@ namespace BrewLib.Input
             Shift = e.Modifiers.HasFlag(KeyModifiers.Shift);
             Alt = e.Modifiers.HasFlag(KeyModifiers.Alt);
         }
-        private void window_KeyDown(object sender, KeyboardKeyEventArgs e) { updateModifierState(e); handler.OnKeyDown(e); }
-        private void window_KeyUp(object sender, KeyboardKeyEventArgs e) { updateModifierState(e); handler.OnKeyUp(e); }
-        private void window_KeyPress(object sender, KeyPressEventArgs e) => handler.OnKeyPress(e);
+        private void window_KeyDown(KeyboardKeyEventArgs e) { updateModifierState(e); handler.OnKeyDown(e); }
+        private void window_KeyUp(KeyboardKeyEventArgs e) { updateModifierState(e); handler.OnKeyUp(e); }
+        //private void window_KeyPress(KeyPressEventArgs e) => handler.OnKeyPress(e);
 
         private bool dedupeMouseWheel;
-        private void window_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void window_MouseWheel(MouseWheelEventArgs e)
         {
             if (dedupeMouseWheel = !dedupeMouseWheel)
                 handler.OnMouseWheel(e);
         }
-
-        private void gamepadManager_OnConnected(object sender, GamepadEventArgs e) => handler.OnGamepadConnected(e);
-        private void gamepadManager_OnButtonDown(object sender, GamepadButtonEventArgs e) => handler.OnGamepadButtonDown(e);
-        private void gamepadManager_OnButtonUp(object sender, GamepadButtonEventArgs e) => handler.OnGamepadButtonUp(e);
     }
 
     public class FocusChangedEventArgs : EventArgs

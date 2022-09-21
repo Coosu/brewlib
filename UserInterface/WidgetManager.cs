@@ -7,6 +7,9 @@ using BrewLib.UserInterface.Skinning;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,7 +28,6 @@ namespace BrewLib.UserInterface
         private Widget rootContainer;
         private readonly Widget tooltipOverlay;
         private readonly Dictionary<MouseButton, Widget> clickTargets = new Dictionary<MouseButton, Widget>();
-        private readonly Dictionary<GamepadButton, Widget> gamepadButtonTargets = new Dictionary<GamepadButton, Widget>();
 
         public Vector2 Size
         {
@@ -119,11 +121,6 @@ namespace BrewLib.UserInterface
             foreach (var key in clickKeys)
                 if (clickTargets[key] == widget)
                     clickTargets[key] = null;
-
-            var gamepadKeys = new List<GamepadButton>(gamepadButtonTargets.Keys);
-            foreach (var key in gamepadKeys)
-                if (gamepadButtonTargets[key] == widget)
-                    gamepadButtonTargets[key] = null;
         }
 
         public void Draw(DrawContext drawContext)
@@ -395,7 +392,7 @@ namespace BrewLib.UserInterface
         public bool OnMouseWheel(MouseWheelEventArgs e) => fire((w, evt) => w.NotifyMouseWheel(evt, e), HoveredWidget ?? rootContainer).Handled;
         public bool OnKeyDown(KeyboardKeyEventArgs e) => fire((w, evt) => w.NotifyKeyDown(evt, e), keyboardFocus ?? HoveredWidget ?? rootContainer).Handled;
         public bool OnKeyUp(KeyboardKeyEventArgs e) => fire((w, evt) => w.NotifyKeyUp(evt, e), keyboardFocus ?? HoveredWidget ?? rootContainer).Handled;
-        public bool OnKeyPress(KeyPressEventArgs e) => fire((w, evt) => w.NotifyKeyPress(evt, e), keyboardFocus ?? HoveredWidget ?? rootContainer).Handled;
+        //public bool OnKeyPress(KeyPressEventArgs e) => fire((w, evt) => w.NotifyKeyPress(evt, e), keyboardFocus ?? HoveredWidget ?? rootContainer).Handled;
 
         private void changeHoveredWidget(Widget widget)
         {
@@ -415,26 +412,6 @@ namespace BrewLib.UserInterface
                 var e = new WidgetHoveredEventArgs(true);
                 fire((w, evt) => w.NotifyHoveredWidgetChange(evt, e), HoveredWidget, previousWidget);
             }
-        }
-
-        public void OnGamepadConnected(GamepadEventArgs e) { }
-        public bool OnGamepadButtonDown(GamepadButtonEventArgs e)
-        {
-            var widgetEvent = fire((w, evt) => w.NotifyGamepadButtonDown(evt, e), gamepadTargets, bubbles: false);
-            if (widgetEvent.Handled)
-                gamepadButtonTargets[e.Button] = widgetEvent.Listener;
-
-            return widgetEvent.Handled;
-        }
-        public bool OnGamepadButtonUp(GamepadButtonEventArgs e)
-        {
-            if (gamepadButtonTargets.TryGetValue(e.Button, out Widget buttonTarget))
-            {
-                gamepadButtonTargets[e.Button] = null;
-                return fire((w, evt) => w.NotifyGamepadButtonUp(evt, e), buttonTarget, bubbles: false).Handled;
-            }
-            //return fire((w, evt) => w.NotifyGamepadButtonUp(evt, e), gamepadTargets, bubbles: false).Handled;
-            return false;
         }
 
         private static WidgetEvent fire(Func<Widget, WidgetEvent, bool> notify, List<Widget> targets, Widget relatedTarget = null, bool bubbles = true)

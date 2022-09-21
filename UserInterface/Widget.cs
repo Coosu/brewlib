@@ -5,11 +5,14 @@ using BrewLib.UserInterface.Skinning.Styles;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.Text;
+using System.Windows.Forms;
 
 namespace BrewLib.UserInterface
 {
@@ -570,16 +573,6 @@ namespace BrewLib.UserInterface
         public bool NotifyFocusChange(WidgetEvent evt, WidgetFocusEventArgs e)
         {
             Raise(OnFocusChange, evt, e);
-            return false;
-        }
-
-        public event HandleableWidgetEventHandler<GamepadButtonEventArgs> OnGamepadButtonDown;
-        public bool NotifyGamepadButtonDown(WidgetEvent evt, GamepadButtonEventArgs e) => Raise(OnGamepadButtonDown, evt, e);
-
-        public event WidgetEventHandler<GamepadButtonEventArgs> OnGamepadButtonUp;
-        public bool NotifyGamepadButtonUp(WidgetEvent evt, GamepadButtonEventArgs e)
-        {
-            Raise(OnGamepadButtonUp, evt, e);
             return false;
         }
 

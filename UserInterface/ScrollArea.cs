@@ -2,6 +2,8 @@
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
 namespace BrewLib.UserInterface
@@ -113,14 +115,14 @@ namespace BrewLib.UserInterface
             OnClickMove += (sender, e) =>
             {
                 if (!dragged) return;
-                scroll(e.XDelta, e.YDelta);
+                scroll(e.DeltaX, e.DeltaY);
             };
             OnMouseWheel += (sender, e) =>
             {
                 if (scrollsVertically)
-                    scroll(0, e.DeltaPrecise * 64);
+                    scroll(0, e.OffsetY * 64);
                 else if (scrollsHorizontally)
-                    scroll(e.DeltaPrecise * 64, 0);
+                    scroll(e.OffsetX * 64, 0);
                 return true;
             };
 

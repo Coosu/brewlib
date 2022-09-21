@@ -1,5 +1,6 @@
 ﻿using BrewLib.Graphics.Cameras;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace BrewLib.Graphics.Drawables
 {

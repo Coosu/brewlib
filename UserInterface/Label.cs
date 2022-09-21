@@ -4,6 +4,7 @@ using BrewLib.Graphics.Drawables;
 using BrewLib.UserInterface.Skinning.Styles;
 using BrewLib.Util;
 using OpenTK;
+using OpenTK.Mathematics;
 using System;
 
 namespace BrewLib.UserInterface

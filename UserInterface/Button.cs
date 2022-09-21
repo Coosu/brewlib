@@ -4,6 +4,8 @@ using OpenTK;
 using System;
 using System.Globalization;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace BrewLib.UserInterface
 {
