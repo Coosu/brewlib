@@ -19,10 +19,6 @@ namespace BrewLib.Input
         public bool HasMouseFocus => window.IsFocused && hasMouseHover;
         public bool HasWindowFocus => window.IsFocused;
 
-        private Dictionary<int, GamepadManager> gamepadManagers = new Dictionary<int, GamepadManager>();
-        public IEnumerable<GamepadManager> GamepadManagers => gamepadManagers.Values;
-        public GamepadManager GetGamepadManager(int gamepadIndex = 0) => gamepadManagers[gamepadIndex];
-
         // Helpers
         public Vector2 MousePosition { get; private set; }
 
@@ -58,10 +54,6 @@ namespace BrewLib.Input
 
         public void Dispose()
         {
-            foreach (var gamepadIndex in new List<int>(gamepadManagers.Keys))
-                DisableGamepadEvents(gamepadIndex);
-            gamepadManagers.Clear();
-
             window.FocusedChanged -= window_FocusedChanged;
             window.MouseEnter -= window_MouseEnter;
             window.MouseLeave -= window_MouseLeave;
@@ -73,30 +65,6 @@ namespace BrewLib.Input
             window.KeyDown -= window_KeyDown;
             window.KeyUp -= window_KeyUp;
             //window.KeyPress -= window_KeyPress;
-        }
-
-        public void EnableGamepadEvents(int gamepadIndex = 0)
-        {
-            var manager = new GamepadManager(gamepadIndex);
-            manager.OnConnected += gamepadManager_OnConnected;
-            manager.OnButtonDown += gamepadManager_OnButtonDown;
-            manager.OnButtonUp += gamepadManager_OnButtonUp;
-            gamepadManagers.Add(gamepadIndex, manager);
-        }
-
-        public void DisableGamepadEvents(int gamepadIndex = 0)
-        {
-            var manager = gamepadManagers[gamepadIndex];
-            manager.OnConnected -= gamepadManager_OnConnected;
-            manager.OnButtonDown -= gamepadManager_OnButtonDown;
-            manager.OnButtonUp -= gamepadManager_OnButtonUp;
-            gamepadManagers.Remove(gamepadIndex);
-        }
-
-        public void Update()
-        {
-            foreach (var gamepadManager in gamepadManagers.Values)
-                gamepadManager.Update();
         }
 
         private void updateMouseFocus()
@@ -145,10 +113,6 @@ namespace BrewLib.Input
             if (dedupeMouseWheel = !dedupeMouseWheel)
                 handler.OnMouseWheel(e);
         }
-
-        private void gamepadManager_OnConnected(object sender, GamepadEventArgs e) => handler.OnGamepadConnected(e);
-        private void gamepadManager_OnButtonDown(object sender, GamepadButtonEventArgs e) => handler.OnGamepadButtonDown(e);
-        private void gamepadManager_OnButtonUp(object sender, GamepadButtonEventArgs e) => handler.OnGamepadButtonUp(e);
     }
 
     public class FocusChangedEventArgs : EventArgs

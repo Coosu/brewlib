@@ -1,7 +1,9 @@
-﻿using BrewLib.UserInterface.Skinning.Styles;
+﻿using BrewLib.Graphics.Renderers;
+using BrewLib.UserInterface.Skinning.Styles;
 using OpenTK;
 using OpenTK.Input;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 
@@ -28,7 +30,7 @@ namespace BrewLib.UserInterface
             }
         }
 
-        public event EventHandler OnValueCommited;
+        public event WidgetEventHandler<MouseButtonEventArgs> OnValueCommited;
 
         public Slider(WidgetManager manager) : base(manager)
         {
@@ -42,7 +44,7 @@ namespace BrewLib.UserInterface
                 if (disabled || dragged) return false;
                 dragButton = e.Button;
                 dragged = true;
-                Value = GetValueForPosition(new Vector2(e.X, e.Y));
+                Value = GetValueForPosition(sender.Listener.Manager.InputManager.MousePosition);
                 DragStart(dragButton);
                 return true;
             };
@@ -53,7 +55,7 @@ namespace BrewLib.UserInterface
                 dragged = false;
                 RefreshStyle();
                 DragEnd(dragButton);
-                OnValueCommited?.Invoke(this, e);
+                OnValueCommited?.Invoke(sender, e);
             };
             OnClickMove += (sender, e) =>
             {

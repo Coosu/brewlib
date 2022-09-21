@@ -576,16 +576,6 @@ namespace BrewLib.UserInterface
             return false;
         }
 
-        public event HandleableWidgetEventHandler<GamepadButtonEventArgs> OnGamepadButtonDown;
-        public bool NotifyGamepadButtonDown(WidgetEvent evt, GamepadButtonEventArgs e) => Raise(OnGamepadButtonDown, evt, e);
-
-        public event WidgetEventHandler<GamepadButtonEventArgs> OnGamepadButtonUp;
-        public bool NotifyGamepadButtonUp(WidgetEvent evt, GamepadButtonEventArgs e)
-        {
-            Raise(OnGamepadButtonUp, evt, e);
-            return false;
-        }
-
         protected static bool Raise<T>(HandleableWidgetEventHandler<T> handler, WidgetEvent evt, T e)
         {
             if (handler != null)

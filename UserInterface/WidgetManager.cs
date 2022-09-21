@@ -28,7 +28,6 @@ namespace BrewLib.UserInterface
         private Widget rootContainer;
         private readonly Widget tooltipOverlay;
         private readonly Dictionary<MouseButton, Widget> clickTargets = new Dictionary<MouseButton, Widget>();
-        private readonly Dictionary<GamepadButton, Widget> gamepadButtonTargets = new Dictionary<GamepadButton, Widget>();
 
         public Vector2 Size
         {
@@ -122,11 +121,6 @@ namespace BrewLib.UserInterface
             foreach (var key in clickKeys)
                 if (clickTargets[key] == widget)
                     clickTargets[key] = null;
-
-            var gamepadKeys = new List<GamepadButton>(gamepadButtonTargets.Keys);
-            foreach (var key in gamepadKeys)
-                if (gamepadButtonTargets[key] == widget)
-                    gamepadButtonTargets[key] = null;
         }
 
         public void Draw(DrawContext drawContext)
@@ -418,26 +412,6 @@ namespace BrewLib.UserInterface
                 var e = new WidgetHoveredEventArgs(true);
                 fire((w, evt) => w.NotifyHoveredWidgetChange(evt, e), HoveredWidget, previousWidget);
             }
-        }
-
-        public void OnGamepadConnected(GamepadEventArgs e) { }
-        public bool OnGamepadButtonDown(GamepadButtonEventArgs e)
-        {
-            var widgetEvent = fire((w, evt) => w.NotifyGamepadButtonDown(evt, e), gamepadTargets, bubbles: false);
-            if (widgetEvent.Handled)
-                gamepadButtonTargets[e.Button] = widgetEvent.Listener;
-
-            return widgetEvent.Handled;
-        }
-        public bool OnGamepadButtonUp(GamepadButtonEventArgs e)
-        {
-            if (gamepadButtonTargets.TryGetValue(e.Button, out Widget buttonTarget))
-            {
-                gamepadButtonTargets[e.Button] = null;
-                return fire((w, evt) => w.NotifyGamepadButtonUp(evt, e), buttonTarget, bubbles: false).Handled;
-            }
-            //return fire((w, evt) => w.NotifyGamepadButtonUp(evt, e), gamepadTargets, bubbles: false).Handled;
-            return false;
         }
 
         private static WidgetEvent fire(Func<Widget, WidgetEvent, bool> notify, List<Widget> targets, Widget relatedTarget = null, bool bubbles = true)

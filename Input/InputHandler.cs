@@ -15,8 +15,5 @@ namespace BrewLib.Input
         bool OnKeyDown(KeyboardKeyEventArgs e);
         bool OnKeyUp(KeyboardKeyEventArgs e);
         //bool OnKeyPress(KeyPressEventArgs e);
-        void OnGamepadConnected(GamepadEventArgs e);
-        bool OnGamepadButtonDown(GamepadButtonEventArgs e);
-        bool OnGamepadButtonUp(GamepadButtonEventArgs e);
     }
 }
