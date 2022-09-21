@@ -270,7 +270,7 @@ namespace BrewLib.UserInterface
             OnClickDown += (sender, e) =>
             {
                 manager.KeyboardFocus = this;
-                selectionStart = cursorPosition = content.GetCharacterIndexAt(Manager.Camera.FromScreen(new Vector2(e.X, e.Y)).Xy);
+                selectionStart = cursorPosition = content.GetCharacterIndexAt(Manager.Camera.FromScreen(sender.Listener.Manager.InputManager.MousePosition).Xy);
                 return true;
             };
             OnClickMove += (sender, e) =>

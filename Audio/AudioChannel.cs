@@ -1,5 +1,6 @@
 ﻿using ManagedBass;
 using OpenTK;
+using OpenTK.Mathematics;
 using System;
 
 namespace BrewLib.Audio

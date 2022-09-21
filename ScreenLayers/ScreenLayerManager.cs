@@ -148,7 +148,7 @@ namespace BrewLib.ScreenLayers
             removedLayers.Clear();
 
             if (layers.Count == 0)
-                window.Exit();
+                window.Close();
         }
 
         public void Draw(DrawContext drawContext, double tween)

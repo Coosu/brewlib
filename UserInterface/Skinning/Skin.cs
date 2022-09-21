@@ -5,6 +5,7 @@ using BrewLib.UserInterface.Skinning.Styles;
 using BrewLib.Util;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
