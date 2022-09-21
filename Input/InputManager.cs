@@ -1,7 +1,7 @@
-﻿using OpenTK;
-using OpenTK.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using OpenTK;
+using OpenTK.Input;
 
 namespace BrewLib.Input
 {
@@ -121,7 +121,7 @@ namespace BrewLib.Input
         private void window_MouseUp(object sender, MouseButtonEventArgs e) => handler.OnClickUp(e);
         private void window_MouseMove(object sender, MouseMoveEventArgs e)
         {
-            MousePosition = new Vector2(e.Position.X, e.Position.Y);
+            MousePosition = new Vector2(e.X, e.Y);
             handler.OnMouseMove(e);
         }
 
