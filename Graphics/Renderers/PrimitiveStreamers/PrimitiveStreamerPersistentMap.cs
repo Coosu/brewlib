@@ -79,7 +79,7 @@ namespace BrewLib.Graphics.Renderers.PrimitiveStreamers
             var pinnedVertexData = GCHandle.Alloc(primitives, GCHandleType.Pinned);
             try
             {
-                Native.CopyMemory(bufferPointer + bufferOffset, pinnedVertexData.AddrOfPinnedObject(), (uint)vertexDataSize);
+                Native.RtlMoveMemory(bufferPointer + bufferOffset, pinnedVertexData.AddrOfPinnedObject(), (uint)vertexDataSize);
             }
             finally
             {
