@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Windows.Forms;
+using OpenTK;
 using OpenTK.Input;
 using OpenTK.Windowing.Common;
 
@@ -13,5 +14,6 @@ namespace BrewLib.Input
         public virtual void OnMouseMove(MouseMoveEventArgs e) { }
         public virtual bool OnKeyDown(KeyboardKeyEventArgs e) => false;
         public virtual bool OnKeyUp(KeyboardKeyEventArgs e) => false;
+        public virtual bool OnKeyPress(KeyPressEventArgs e) => false;
     }
 }

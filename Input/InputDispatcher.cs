@@ -2,6 +2,7 @@
 using OpenTK.Input;
 using OpenTK.Windowing.Common;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace BrewLib.Input
 {
@@ -85,7 +86,7 @@ namespace BrewLib.Input
                     return true;
             return false;
         }
-        /*
+
         public bool OnKeyPress(KeyPressEventArgs e)
         {
             foreach (var handler in handlers)
@@ -93,6 +94,6 @@ namespace BrewLib.Input
                     return true;
             return false;
         }
-        */
+
     }
 }
