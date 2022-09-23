@@ -554,6 +554,9 @@ namespace BrewLib.UserInterface
         public event HandleableWidgetEventHandler<KeyPressEventArgs> OnKeyPress;
         public bool NotifyKeyPress(WidgetEvent evt, KeyPressEventArgs e) => Raise(OnKeyPress, evt, e);
 
+        public event HandleableWidgetEventHandler<TextInputEventArgs> OnTextInput;
+        public bool NotifyTextInput(WidgetEvent evt, TextInputEventArgs e) => Raise(OnTextInput, evt, e);
+
         public event WidgetEventHandler<WidgetHoveredEventArgs> OnHovered;
         public event WidgetEventHandler<WidgetHoveredEventArgs> OnHoveredWidgetChange;
         public bool NotifyHoveredWidgetChange(WidgetEvent evt, WidgetHoveredEventArgs e)
@@ -613,7 +616,7 @@ namespace BrewLib.UserInterface
         /// </summary>
         public GetDragDataDelegate GetDragData;
         public delegate object GetDragDataDelegate();
-        
+
         /// <summary>
         /// Set a function to enable dropping onto this widget.
         /// Return true if the drop was valid.

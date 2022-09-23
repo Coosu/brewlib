@@ -15,5 +15,6 @@ namespace BrewLib.Input
         bool OnKeyDown(KeyboardKeyEventArgs e);
         bool OnKeyUp(KeyboardKeyEventArgs e);
         bool OnKeyPress(KeyPressEventArgs e);
+        bool OnTextInput(TextInputEventArgs e);
     }
 }
