@@ -87,14 +87,6 @@ namespace BrewLib.Input
             return false;
         }
 
-        public bool OnKeyPress(KeyPressEventArgs e)
-        {
-            foreach (var handler in handlers)
-                if (handler.OnKeyPress(e))
-                    return true;
-            return false;
-        }
-
         public bool OnTextInput(TextInputEventArgs e)
         {
             foreach (var handler in handlers)

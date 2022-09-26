@@ -551,9 +551,6 @@ namespace BrewLib.UserInterface
         public event HandleableWidgetEventHandler<KeyboardKeyEventArgs> OnKeyUp;
         public bool NotifyKeyUp(WidgetEvent evt, KeyboardKeyEventArgs e) => Raise(OnKeyUp, evt, e);
 
-        public event HandleableWidgetEventHandler<KeyPressEventArgs> OnKeyPress;
-        public bool NotifyKeyPress(WidgetEvent evt, KeyPressEventArgs e) => Raise(OnKeyPress, evt, e);
-
         public event HandleableWidgetEventHandler<TextInputEventArgs> OnTextInput;
         public bool NotifyTextInput(WidgetEvent evt, TextInputEventArgs e) => Raise(OnTextInput, evt, e);
 

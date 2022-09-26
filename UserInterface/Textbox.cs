@@ -149,9 +149,10 @@ namespace BrewLib.UserInterface
                 hovered = e.Hovered;
                 RefreshStyle();
             };
-            OnTextInput += (sender, e) => {
-                //todo add input
-                Debug.WriteLine($"Textbox text input:{e.AsString}");
+            OnTextInput += (sender, e) =>
+            {
+                if (!hasFocus) return false;
+                ReplaceSelection(e.AsString);
                 return true;
             };
             OnKeyDown += (sender, e) =>
@@ -266,12 +267,6 @@ namespace BrewLib.UserInterface
             OnKeyUp += (sender, e) =>
             {
                 return hasFocus;
-            };
-            OnKeyPress += (sender, e) =>
-            {
-                if (!hasFocus) return false;
-                ReplaceSelection(e.KeyChar.ToString());
-                return true;
             };
             OnClickDown += (sender, e) =>
             {
