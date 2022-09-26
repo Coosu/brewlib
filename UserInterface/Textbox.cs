@@ -8,6 +8,7 @@ using OpenTK.Input;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
+using System.Diagnostics;
 
 namespace BrewLib.UserInterface
 {
@@ -147,6 +148,11 @@ namespace BrewLib.UserInterface
             {
                 hovered = e.Hovered;
                 RefreshStyle();
+            };
+            OnTextInput += (sender, e) => {
+                //todo add input
+                Debug.WriteLine($"Textbox text input:{e.AsString}");
+                return true;
             };
             OnKeyDown += (sender, e) =>
             {

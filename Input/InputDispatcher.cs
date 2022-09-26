@@ -95,5 +95,12 @@ namespace BrewLib.Input
             return false;
         }
 
+        public bool OnTextInput(TextInputEventArgs e)
+        {
+            foreach (var handler in handlers)
+                if (handler.OnTextInput(e))
+                    return true;
+            return false;
+        }
     }
 }

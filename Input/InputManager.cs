@@ -53,7 +53,7 @@ namespace BrewLib.Input
             window.MouseMove += window_MouseMove;
             window.KeyDown += window_KeyDown;
             window.KeyUp += window_KeyUp;
-            //window.key += window_KeyPress;
+            window.TextInput += window_TextInput;
         }
 
         public void Dispose()
@@ -68,7 +68,7 @@ namespace BrewLib.Input
             window.MouseMove += window_MouseMove;
             window.KeyDown -= window_KeyDown;
             window.KeyUp -= window_KeyUp;
-            //window.KeyPress -= window_KeyPress;
+            window.TextInput -= window_TextInput;
         }
 
         private void updateMouseFocus()
@@ -116,6 +116,8 @@ namespace BrewLib.Input
         }
         private void window_KeyUp(KeyboardKeyEventArgs e) { updateModifierState(e); handler.OnKeyUp(e); }
         private void window_KeyPress(KeyPressEventArgs e) => handler.OnKeyPress(e);
+
+        private void window_TextInput(TextInputEventArgs e) => handler.OnTextInput(e);
 
         private bool dedupeMouseWheel;
         private void window_MouseWheel(MouseWheelEventArgs e)
